@@ -12,6 +12,10 @@ Output: LXXV.
 
 I choose solution in which we divided the number by its largest base value.
 
+Update:
+1. Use `dict` data structure.
+2. Check input with `assert` construction.
+
 ### For example
 > Input number = **75**.
 > 
