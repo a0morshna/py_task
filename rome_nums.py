@@ -1,63 +1,51 @@
 # function to convert arabic numbers to roman
-def convert_nums(n):
+def convert_nums(input_number):
 
-    # write all numbers what we need in array
-    arabic_nums = [1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000]
-    roman_nums = ['I', 'IV', 'V', 'IX', 'X', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M']
+    # write all numbers what we need in dictionary
+    arabic_to_roman_nums = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C', 90: 'XC', 50: 'L',
+                            40: 'XL', 10: 'X', 9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
 
-    # quantity of our steps is 12 cause 12 numbers in array
-    quantity = 12
+    # write here our result
+    result = ""
 
-    # do function while n become a zero
-    while n != 0:
-
+    # arabic_to_roman_nums.keys - return keys in dictionary
+    for keys in arabic_to_roman_nums.keys():
         # divide by largest value
-        dividing = n // arabic_nums[quantity]
+        dividing = input_number // keys
 
-        # find out the remainder
-        n %= arabic_nums[quantity]
+        # find out the remainder and add
+        # the value of the right operand to the left
+        # and assign the sum in the left operand
+        result += arabic_to_roman_nums[keys] * dividing
 
-        while dividing:
-            print(roman_nums[quantity], end='')
+        # subtract right operand from the left
+        # and assign the result to the left operand
+        input_number -= keys * dividing
 
-            # subtract right operand from the left
-            # and assign the result to the left operand
-            dividing -= 1
+    return result
 
-        quantity -= 1
+
+def check_input(input_number):
+    # if input_number is equal to zero
+    assert input_number != 0, 'ValueError, please, try another one. Argument must be between 1 to 9999.'
+
+    # if input_number is equal to 9999
+    assert input_number != 9999, 'ValueError, please, try another one. Argument must be between 1 to 9999.'
+
+    # if input_number wrong type
+    assert isinstance(input_number, int), 'TypeError! Its not a number, try again.'
+
+    # if input_number out of scope
+    assert 0 < input_number < 9999, 'ValueError, please, try another one. Argument must be between 1 to 9999.'
 
 
 # the main function
 if __name__ == '__main__':
+    input_number = int(input("Arabic Number: "))
 
-    n = int(input("Arabic Number: "))
+    # call function to check our input
+    check_input(input_number)
 
-    # write an exception
-    try:
-        # if input wrong type
-        if not type(n) is int:
-            raise TypeError
-
-        # if n out of scope
-        if not 0 < n < 9999:
-            raise ValueError
-
-        # if n is equal to zero
-        if n == 0:
-            raise ValueError
-
-        # if n equal to 9999
-        if n == 9999:
-            raise ValueError
-
-    # if an exception with this error occur
-    except TypeError:
-        print("TypeError! It's not a number, try again.")
-
-    except ValueError:
-        print("ValueError, please, try another one. Argument must be between 1 to 9999.")
-
-    # if everything is fine execute the convert_nums function
-    else:
-        print("Roman Number: ", end="")
-        convert_nums(n)
+    # call converter function
+    converter = convert_nums(input_number)
+    print("Roman Number: ", converter)
